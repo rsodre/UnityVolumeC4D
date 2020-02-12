@@ -1,0 +1,313 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXFileReference section */
+		DB0B36CD20C8A4810062554C /* source */ = {isa = PBXFileReference; lastKnownFileType = folder; name = source; path = "/Applications/MAXON/CINEMA 4D R20/frameworks/cinema.framework/source"; sourceTree = "<absolute>"; };
+		DB909DE720CD239100A8123D /* UnityVolume */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnityVolume; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBF6B7A623F4767E006A55BF /* TUnityVolume.str */ = {isa = PBXFileReference; lastKnownFileType = text; name = TUnityVolume.str; path = ../UnityVolume/res/strings_us/description/TUnityVolume.str; sourceTree = SOURCE_ROOT; };
+		DBF6B7A823F4767E006A55BF /* TUnityVolume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUnityVolume.h; path = ../UnityVolume/res/description/TUnityVolume.h; sourceTree = SOURCE_ROOT; };
+		DBF6B7A923F4767E006A55BF /* TUnityVolume.res */ = {isa = PBXFileReference; lastKnownFileType = text; name = TUnityVolume.res; path = ../UnityVolume/res/description/TUnityVolume.res; sourceTree = SOURCE_ROOT; };
+		DBF6B7AB23F4767E006A55BF /* c4d_symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = c4d_symbols.h; path = ../UnityVolume/res/c4d_symbols.h; sourceTree = SOURCE_ROOT; };
+		DBF6B7AC23F4767E006A55BF /* UnityVolume.pyp */ = {isa = PBXFileReference; lastKnownFileType = text; name = UnityVolume.pyp; path = ../UnityVolume/UnityVolume.pyp; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.python; };
+		DBF6B7B523F47690006A55BF /* install.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = install.sh; sourceTree = SOURCE_ROOT; };
+		DBF6B8D323F482A6006A55BF /* cinema4d_py_sdk-master */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "cinema4d_py_sdk-master"; path = "../../cinema4d_py_sdk-master"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		DB0B31BE20C888520062554C = {
+			isa = PBXGroup;
+			children = (
+				DBF6B79D23F4767E006A55BF /* UnityVolume */,
+				DB0B31CE20C8A4630062554C /* C4D Resources */,
+				DB909DE720CD239100A8123D /* UnityVolume */,
+			);
+			sourceTree = "<group>";
+		};
+		DB0B31CE20C8A4630062554C /* C4D Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DBF6B8D323F482A6006A55BF /* cinema4d_py_sdk-master */,
+				DB0B36CD20C8A4810062554C /* source */,
+			);
+			name = "C4D Resources";
+			sourceTree = "<group>";
+		};
+		DBF6B79D23F4767E006A55BF /* UnityVolume */ = {
+			isa = PBXGroup;
+			children = (
+				DBF6B7AC23F4767E006A55BF /* UnityVolume.pyp */,
+				DBF6B7A323F4767E006A55BF /* res */,
+				DBF6B7B123F47690006A55BF /* xcode */,
+			);
+			name = UnityVolume;
+			path = ..;
+			sourceTree = SOURCE_ROOT;
+		};
+		DBF6B7A323F4767E006A55BF /* res */ = {
+			isa = PBXGroup;
+			children = (
+				DBF6B7A723F4767E006A55BF /* description */,
+				DBF6B7A423F4767E006A55BF /* strings_us */,
+				DBF6B7AB23F4767E006A55BF /* c4d_symbols.h */,
+			);
+			name = res;
+			path = ../UnityVolume/res;
+			sourceTree = SOURCE_ROOT;
+		};
+		DBF6B7A423F4767E006A55BF /* strings_us */ = {
+			isa = PBXGroup;
+			children = (
+				DBF6B7A523F4767E006A55BF /* description */,
+			);
+			name = strings_us;
+			path = ../UnityVolume/res/strings_us;
+			sourceTree = SOURCE_ROOT;
+		};
+		DBF6B7A523F4767E006A55BF /* description */ = {
+			isa = PBXGroup;
+			children = (
+				DBF6B7A623F4767E006A55BF /* TUnityVolume.str */,
+			);
+			name = description;
+			path = ../UnityVolume/res/strings_us/description;
+			sourceTree = SOURCE_ROOT;
+		};
+		DBF6B7A723F4767E006A55BF /* description */ = {
+			isa = PBXGroup;
+			children = (
+				DBF6B7A823F4767E006A55BF /* TUnityVolume.h */,
+				DBF6B7A923F4767E006A55BF /* TUnityVolume.res */,
+			);
+			name = description;
+			path = ../UnityVolume/res/description;
+			sourceTree = SOURCE_ROOT;
+		};
+		DBF6B7B123F47690006A55BF /* xcode */ = {
+			isa = PBXGroup;
+			children = (
+				DBF6B7B523F47690006A55BF /* install.sh */,
+			);
+			name = xcode;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DB5BF8A620CB0AEC005A4991 /* UnityVolume */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB5BF8AC20CB0AEC005A4991 /* Build configuration list for PBXNativeTarget "UnityVolume" */;
+			buildPhases = (
+				DB5BF8AF20CB0B31005A4991 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnityVolume;
+			productName = Aeroplane;
+			productReference = DB909DE720CD239100A8123D /* UnityVolume */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DB0B31BF20C888520062554C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					DB5BF8A620CB0AEC005A4991 = {
+						CreatedOnToolsVersion = 9.3.1;
+					};
+				};
+			};
+			buildConfigurationList = DB0B31C220C888520062554C /* Build configuration list for PBXProject "UnityVolume" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DB0B31BE20C888520062554C;
+			productRefGroup = DB0B31BE20C888520062554C;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DB5BF8A620CB0AEC005A4991 /* UnityVolume */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DB5BF8AF20CB0B31005A4991 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./install.sh\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DB0B31C320C888520062554C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		DB0B31C420C888520062554C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		DB5BF8AD20CB0AEC005A4991 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DB5BF8AE20CB0AEC005A4991 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DB0B31C220C888520062554C /* Build configuration list for PBXProject "UnityVolume" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB0B31C320C888520062554C /* Debug */,
+				DB0B31C420C888520062554C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB5BF8AC20CB0AEC005A4991 /* Build configuration list for PBXNativeTarget "UnityVolume" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB5BF8AD20CB0AEC005A4991 /* Debug */,
+				DB5BF8AE20CB0AEC005A4991 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DB0B31BF20C888520062554C /* Project object */;
+}
