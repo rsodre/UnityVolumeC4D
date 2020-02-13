@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		DB0B36CD20C8A4810062554C /* source */ = {isa = PBXFileReference; lastKnownFileType = folder; name = source; path = "/Applications/MAXON/CINEMA 4D R20/frameworks/cinema.framework/source"; sourceTree = "<absolute>"; };
 		DB909DE720CD239100A8123D /* UnityVolume */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnityVolume; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF6B7A623F4767E006A55BF /* TUnityVolume.str */ = {isa = PBXFileReference; lastKnownFileType = text; name = TUnityVolume.str; path = ../UnityVolume/res/strings_us/description/TUnityVolume.str; sourceTree = SOURCE_ROOT; };
 		DBF6B7A823F4767E006A55BF /* TUnityVolume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUnityVolume.h; path = ../UnityVolume/res/description/TUnityVolume.h; sourceTree = SOURCE_ROOT; };
-		DBF6B7A923F4767E006A55BF /* TUnityVolume.res */ = {isa = PBXFileReference; lastKnownFileType = text; name = TUnityVolume.res; path = ../UnityVolume/res/description/TUnityVolume.res; sourceTree = SOURCE_ROOT; };
+		DBF6B7A923F4767E006A55BF /* TUnityVolume.res */ = {isa = PBXFileReference; lastKnownFileType = text; name = TUnityVolume.res; path = ../UnityVolume/res/description/TUnityVolume.res; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		DBF6B7AB23F4767E006A55BF /* c4d_symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = c4d_symbols.h; path = ../UnityVolume/res/c4d_symbols.h; sourceTree = SOURCE_ROOT; };
 		DBF6B7AC23F4767E006A55BF /* UnityVolume.pyp */ = {isa = PBXFileReference; lastKnownFileType = text; name = UnityVolume.pyp; path = ../UnityVolume/UnityVolume.pyp; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.python; };
 		DBF6B7B523F47690006A55BF /* install.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = install.sh; sourceTree = SOURCE_ROOT; };
@@ -32,7 +31,6 @@
 			isa = PBXGroup;
 			children = (
 				DBF6B8D323F482A6006A55BF /* cinema4d_py_sdk-master */,
-				DB0B36CD20C8A4810062554C /* source */,
 			);
 			name = "C4D Resources";
 			sourceTree = "<group>";

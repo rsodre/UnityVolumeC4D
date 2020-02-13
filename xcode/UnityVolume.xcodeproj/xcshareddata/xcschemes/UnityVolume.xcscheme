@@ -42,7 +42,7 @@
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -56,6 +56,15 @@
          BundleIdentifier = "net.maxon.cinema4d"
          FilePath = "/Applications/MAXON/CINEMA 4D R20/CINEMA 4D.app">
       </PathRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "DB5BF8A620CB0AEC005A4991"
+            BuildableName = "UnityVolume"
+            BlueprintName = "UnityVolume"
+            ReferencedContainer = "container:UnityVolume.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

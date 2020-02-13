@@ -4,8 +4,10 @@ STRINGTABLE TUnityVolume
 
 	UNITY_VOLUME_Volume			"Volume";
 	
+	UNITY_VOLUME_VoxelSize		"Voxel Size";
+	UNITY_VOLUME_VoxelCount		"Voxel Count";
 	UNITY_VOLUME_VolumeSize		"Volume Size";
-	
+
 	UNITY_VOLUME_ExportSDF		"Export SDF";
 	UNITY_VOLUME_ExportVF		"Export VF";
 }

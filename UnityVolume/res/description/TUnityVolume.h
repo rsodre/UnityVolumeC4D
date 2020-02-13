@@ -5,8 +5,10 @@ enum
 {
 	UNITY_VOLUME_Volume = 1000,
 	
-	UNITY_VOLUME_VolumeSize = 1100,
-	
+	UNITY_VOLUME_VoxelCount = 1100,
+	UNITY_VOLUME_VoxelSize,
+	UNITY_VOLUME_VolumeSize,
+
 	UNITY_VOLUME_ExportSDF = 1200,
 	UNITY_VOLUME_ExportVF
 }

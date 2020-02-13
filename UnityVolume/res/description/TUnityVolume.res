@@ -10,9 +10,17 @@ CONTAINER TUnityVolume
 			ACCEPT { Ovolumebuilder; }
 		}
 		
-		LONG UNITY_VOLUME_VolumeSize {}
+		VECTOR UNITY_VOLUME_VoxelSize {}
+		LONG UNITY_VOLUME_VoxelCount {}
+		VECTOR UNITY_VOLUME_VolumeSize {}
+
+		SEPARATOR { LINE; }
 		
-		BUTTON UNITY_VOLUME_ExportSDF {}
-		BUTTON UNITY_VOLUME_ExportVF {}
+		GROUP
+		{
+			COLUMNS 2;
+			BUTTON UNITY_VOLUME_ExportSDF {}
+			BUTTON UNITY_VOLUME_ExportVF {}
+		}
 	}
 }
