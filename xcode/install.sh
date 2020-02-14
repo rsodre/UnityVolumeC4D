@@ -3,8 +3,8 @@
 # Delete C4D attributes cache
 # Find your folder in Edit > Preferences > Open Preferences folder
 #export PREFERENCES_FOLDER="$HOME/Library/Preferences/MAXON/CINEMA 4D R20_7DE41E5A"
-export PREFERENCES_FOLDER="$HOME/Library/Preferences/MAXON/*"
-rm -f "$PREFERENCES_FOLDER/prefs/symbolcache"
+#rm -f "$PREFERENCES_FOLDER/prefs/symbolcache"
+rm -f $HOME/Library/Preferences/MAXON/*/prefs/symbolcache
 
 # Copy plugin to C4D
 #export PLUGINS_FOLDER="/Applications/MAXON/CINEMA 4D R20/plugins"

@@ -7,12 +7,12 @@ CONTAINER TUnityVolume
 	{
 		LINK UNITY_VOLUME_Volume
 		{
-			ACCEPT { Ovolumebuilder; }
+			ACCEPT { Ovolume; Ovolumebuilder; }
 		}
 		
-		VECTOR UNITY_VOLUME_VoxelSize {}
-		LONG UNITY_VOLUME_VoxelCount {}
 		VECTOR UNITY_VOLUME_VolumeSize {}
+		LONG UNITY_VOLUME_VolumeCount {}
+		LONG UNITY_VOLUME_VoxelCount {}
 
 		SEPARATOR { LINE; }
 		
