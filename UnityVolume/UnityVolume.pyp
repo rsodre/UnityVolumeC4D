@@ -67,8 +67,8 @@ class UnityVolume(plugins.TagData):
 		if paramId == c4d.UNITY_VOLUME_VoxelCount:
 			volume = self.get_volume_object(node)
 			if volume == None: return False
-			vi = volume.GetVolume()
-			data = vi.GetActiveVoxelCount()
+			itf = volume.GetVolume()
+			data = itf.GetActiveVoxelCount()
 			return (True, data, flags | c4d.DESCFLAGS_GET_PARAM_GET)
 		if paramId == c4d.UNITY_VOLUME_VoxelSize:
 			volume = self.get_volume_object(node)
