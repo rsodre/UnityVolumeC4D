@@ -1,13 +1,18 @@
 STRINGTABLE TUnityVolume
 {
-	TUnityVolume		"Unity Volume";
+	TUnityVolume				"Unity Volume";
 
-	UNITY_VOLUME_Volume			"Volume";
+	UVOL_Volume					"Volume";
 	
-	UNITY_VOLUME_VolumeSize		"Volume Size";
-	UNITY_VOLUME_VolumeCount	"Volume Count";
-	UNITY_VOLUME_VoxelCount		"Voxel Count";
+	UVOL_CellsCount				"Cells Count";
+	UVOL_CellsCenter			"Cells Center";
+	UVOL_BoundsSize				"Bounds";
+	UVOL_DrawPoints				"Draw Points";
 
-	UNITY_VOLUME_ExportSDF		"Export SDF";
-	UNITY_VOLUME_ExportVF		"Export VF";
+	UVOL_Info_VolumeSize		"Volume Size";
+	UVOL_Info_VolumeCount		"Volume Count";
+	UVOL_Info_VoxelCount		"Voxel Count";
+
+	UVOL_Button_ExportSDF		"Export SDF";
+	UVOL_Button_ExportVF		"Export VF";
 }

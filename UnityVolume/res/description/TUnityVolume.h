@@ -3,14 +3,18 @@
 
 enum
 {
-	UNITY_VOLUME_Volume = 1000,
-	
-	UNITY_VOLUME_VolumeSize = 1100,
-	UNITY_VOLUME_VolumeCount,
-	UNITY_VOLUME_VoxelCount,
+	UVOL_Volume = 1000,
+	UVOL_CellsCount,
+	UVOL_CellsCenter,
+	UVOL_BoundsSize,
+	UVOL_DrawPoints,
 
-	UNITY_VOLUME_ExportSDF = 1200,
-	UNITY_VOLUME_ExportVF
+	UVOL_Info_VolumeSize = 1100,
+	UVOL_Info_VolumeCount,
+	UVOL_Info_VoxelCount,
+
+	UVOL_Button_ExportSDF = 1200,
+	UVOL_Button_ExportVF
 }
 
 #endif

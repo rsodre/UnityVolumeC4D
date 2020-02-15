@@ -5,22 +5,30 @@ CONTAINER TUnityVolume
     
     GROUP ID_TAGPROPERTIES
 	{
-		LINK UNITY_VOLUME_Volume
+		LINK UVOL_Volume
 		{
+			ANIM OFF;
 			ACCEPT { Ovolume; Ovolumebuilder; }
 		}
 		
-		VECTOR UNITY_VOLUME_VolumeSize {}
-		LONG UNITY_VOLUME_VolumeCount {}
-		LONG UNITY_VOLUME_VoxelCount {}
+		VECTOR UVOL_Info_VolumeSize { ANIM OFF; }
+		LONG UVOL_Info_VolumeCount { ANIM OFF; }
+		LONG UVOL_Info_VoxelCount { ANIM OFF; }
+
+		SEPARATOR { LINE; }
+		
+		VECTOR UVOL_CellsCount { ANIM OFF; }
+		VECTOR UVOL_BoundsSize { ANIM OFF; }
+		BOOL UVOL_CellsCenter { ANIM OFF; }
+		BOOL UVOL_DrawPoints { ANIM OFF; }
 
 		SEPARATOR { LINE; }
 		
 		GROUP
 		{
 			COLUMNS 2;
-			BUTTON UNITY_VOLUME_ExportSDF {}
-			BUTTON UNITY_VOLUME_ExportVF {}
+			BUTTON UVOL_Button_ExportSDF {}
+			BUTTON UVOL_Button_ExportVF {}
 		}
 	}
 }
