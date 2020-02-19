@@ -48,19 +48,19 @@ class UnityVolume(plugins.TagData):
 
 
 	def Init(self, node):
-		data = node.GetDataInstance()
-		data.SetVector( c4d.UVOL_CellsCount, c4d.Vector(20,20,20) )
-		data.SetBool( c4d.UVOL_CellsCenter, True )
-		data.SetBool( c4d.UVOL_DrawPoints, True )
-		data.SetBool( c4d.UVOL_AutoGenerate, True )
-		data.SetVector( c4d.UVOL_BoundsSize, c4d.Vector(200,200,200) )
-		data.SetVector( c4d.UVOL_Info_VolumeSize, c4d.Vector(0) )
-		data.SetInt32( c4d.UVOL_Info_VolumeCount, 0 )
-		data.SetInt32( c4d.UVOL_Info_VoxelCount, 0 )
+		bc = node.GetDataInstance()
+		bc.SetVector( c4d.UVOL_CellsCount, c4d.Vector(20,20,20) )
+		bc.SetBool( c4d.UVOL_CellsCenter, True )
+		bc.SetBool( c4d.UVOL_DrawPoints, True )
+		bc.SetBool( c4d.UVOL_AutoGenerate, True )
+		bc.SetVector( c4d.UVOL_BoundsSize, c4d.Vector(200,200,200) )
+		bc.SetVector( c4d.UVOL_Info_VolumeSize, c4d.Vector(0) )
+		bc.SetInt32( c4d.UVOL_Info_VolumeCount, 0 )
+		bc.SetInt32( c4d.UVOL_Info_VoxelCount, 0 )
 		return True
 
 	def GetDEnabling(self, node, id, t_data, flags, itemdesc):
-		#data = node.GetDataInstance()
+		#bc = node.GetDataInstance()
 		#if data is None: return
 		paramId = id[0].id
 		if paramId == c4d.UVOL_Volume:
@@ -84,24 +84,24 @@ class UnityVolume(plugins.TagData):
 			return (True, data, flags | c4d.DESCFLAGS_GET_PARAM_GET)
 		if paramId == c4d.UVOL_Info_VolumeSize:
 			vob = self.get_volume_object(node)
-			if vob == None: return False
-			volume = vob.GetVolume()
-			dim = volume.GetActiveVoxelDim()
-			data = c4d.Vector(dim.x,dim.y,dim.z)
-			return (True, data, flags | c4d.DESCFLAGS_GET_PARAM_GET)
+			if vob is not None:
+				volume = vob.GetVolume()
+				dim = volume.GetActiveVoxelDim()
+				data = c4d.Vector(dim.x,dim.y,dim.z)
+				return (True, data, flags | c4d.DESCFLAGS_GET_PARAM_GET)
 		if paramId == c4d.UVOL_Info_VolumeCount:
 			vob = self.get_volume_object(node)
-			if vob == None: return False
-			volume = vob.GetVolume()
-			dim = volume.GetActiveVoxelDim()
-			data = dim.x * dim.y * dim.z
-			return (True, data, flags | c4d.DESCFLAGS_GET_PARAM_GET)
+			if vob is not None:
+				volume = vob.GetVolume()
+				dim = volume.GetActiveVoxelDim()
+				data = dim.x * dim.y * dim.z
+				return (True, data, flags | c4d.DESCFLAGS_GET_PARAM_GET)
 		if paramId == c4d.UVOL_Info_VoxelCount:
 			vob = self.get_volume_object(node)
-			if vob == None: return False
-			volume = vob.GetVolume()
-			data = volume.GetActiveVoxelCount()
-			return (True, data, flags | c4d.DESCFLAGS_GET_PARAM_GET)
+			if vob is not None:
+				volume = vob.GetVolume()
+				data = volume.GetActiveVoxelCount()
+				return (True, data, flags | c4d.DESCFLAGS_GET_PARAM_GET)
 		return False
 
 	def Message(self, node, type, data):
@@ -134,8 +134,8 @@ class UnityVolume(plugins.TagData):
 		return True
 	
 	def Execute(self, tag, doc, op, bt, priority, flags):
-		data = tag.GetDataInstance()
-		if data.GetBool(c4d.UVOL_AutoGenerate):
+		bc = tag.GetDataInstance()
+		if bc.GetBool(c4d.UVOL_AutoGenerate):
 			self.generate_sdf(tag)
 
 		return c4d.EXECUTIONRESULT_OK
@@ -155,9 +155,9 @@ class UnityVolume(plugins.TagData):
 		#xform = volume.GetGridTransform()
 		#gridName = volume.GetGridName()
 		
-		data = node.GetDataInstance()
-		cellsCount = data.GetVector(c4d.UVOL_CellsCount)
-		boundsSize = data.GetVector(c4d.UVOL_BoundsSize)
+		bc = node.GetDataInstance()
+		cellsCount = bc.GetVector(c4d.UVOL_CellsCount)
+		boundsSize = bc.GetVector(c4d.UVOL_BoundsSize)
 		boundsMin = boundsSize * -0.5
 		boundsMax = boundsSize * 0.5
 
@@ -165,7 +165,7 @@ class UnityVolume(plugins.TagData):
 		yrange = []
 		zrange = []
 		cellsSize = c4d.Vector( boundsSize.x/cellsCount.x, boundsSize.y/cellsCount.y, boundsSize.z/cellsCount.z )
-		if data.GetBool(c4d.UVOL_CellsCenter):
+		if bc.GetBool(c4d.UVOL_CellsCenter):
 			for x in range( 0, int(cellsCount.x) ):
 				xrange.append( boundsMin.x + (x + 0.5) * cellsSize.x )
 			for y in range( 0, int(cellsCount.y) ):
@@ -232,21 +232,22 @@ class UnityVolume(plugins.TagData):
 	# Draw
 	#
 	def Draw(self, node, op, bd, bh):
-		data = node.GetDataInstance()
-		if not data.GetBool(c4d.UVOL_DrawPoints): return
+		bc = node.GetDataInstance()
+		if not bc.GetBool(c4d.UVOL_DrawPoints):
+			return c4d.DRAWRESULT_SKIP
 		
 		vob = self.get_volume_object(node)
 		#bd.SetMatrix_Matrix( vob, vob.GetMg() )
 		bd.SetMatrix_Matrix( None, c4d.Matrix() )
 
-		data = node.GetDataInstance()
-		if data.GetBool(c4d.UVOL_DrawPoints) and len(self.points_) > 0 and len(self.colors_) > 0:
+		bc = node.GetDataInstance()
+		if bc.GetBool(c4d.UVOL_DrawPoints) and len(self.points_) > 0 and len(self.colors_) > 0:
 			bd.DrawPoints( self.points_, self.colors_, len(self.colors_)/len(self.points_) )
 
 		# Draws the overall bounding box
 		#boundsColor = c4d.GetViewColor(c4d.VIEWCOLOR_ACTIVEPOINT);
 		boundsColor = c4d.Vector(0,1,1) if self.generated_ else c4d.Vector(1,0,0)
-		boundsSize = data.GetVector(c4d.UVOL_BoundsSize)
+		boundsSize = bc.GetVector(c4d.UVOL_BoundsSize)
 		box = c4d.Matrix()
 		box.v1 = box.v1 * (boundsSize.x * 0.5)
 		box.v2 = box.v2 * (boundsSize.y * 0.5)
