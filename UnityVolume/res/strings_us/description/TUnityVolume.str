@@ -8,11 +8,14 @@ STRINGTABLE TUnityVolume
 	UVOL_CellsCenter			"Cells Center";
 	UVOL_BoundsSize				"Bounds";
 	UVOL_DrawPoints				"Draw Points";
+	UVOL_AutoGenerate			"Auto Generate";
 
 	UVOL_Info_VolumeSize		"Volume Size";
 	UVOL_Info_VolumeCount		"Volume Count";
 	UVOL_Info_VoxelCount		"Voxel Count";
 
+	UVOL_Button_GenerateSDF		"Generate SDF";
 	UVOL_Button_ExportSDF		"Export SDF";
+	UVOL_Button_GenerateVF		"Generate VF";
 	UVOL_Button_ExportVF		"Export VF";
 }

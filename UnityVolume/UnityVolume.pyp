@@ -21,8 +21,12 @@ PLUGIN_ID = 1054472
 class UnityVolume(plugins.TagData):
 	"""UnityVolume"""
 
+	states_ = []
+	values_ = []
 	points_ = []
 	colors_ = []
+	generated_ = False
+	vobDirty_ = -1
 
 	def get_volume_link(self, node):
 		parent = node.GetObject()
@@ -48,6 +52,7 @@ class UnityVolume(plugins.TagData):
 		data.SetVector( c4d.UVOL_CellsCount, c4d.Vector(20,20,20) )
 		data.SetBool( c4d.UVOL_CellsCenter, True )
 		data.SetBool( c4d.UVOL_DrawPoints, True )
+		data.SetBool( c4d.UVOL_AutoGenerate, True )
 		data.SetVector( c4d.UVOL_BoundsSize, c4d.Vector(200,200,200) )
 		data.SetVector( c4d.UVOL_Info_VolumeSize, c4d.Vector(0) )
 		data.SetInt32( c4d.UVOL_Info_VolumeCount, 0 )
@@ -66,8 +71,10 @@ class UnityVolume(plugins.TagData):
 			return False
 		if paramId == c4d.UVOL_Info_VolumeCount:
 			return False
-		#elif id[0].id==c4d.SPLINEOBJECT_ANGLE:
-		#	return inter==c4d.SPLINEOBJECT_INTERPOLATION_ADAPTIVE or inter==c4d.SPLINEOBJECT_INTERPOLATION_SUBDIV
+		if paramId == c4d.UVOL_Button_GenerateVF:
+			return False
+		if paramId == c4d.UVOL_Button_ExportVF:
+			return False
 		return True
 
 	def GetDParameter(self, node, id, flags):
@@ -101,17 +108,47 @@ class UnityVolume(plugins.TagData):
 		if type == c4d.MSG_DESCRIPTION_COMMAND:
 			if not data: return
 			commandId = data['id'][0].id
+			if commandId == c4d.UVOL_Button_GenerateSDF:
+				self.generate_sdf(node)
 			if commandId == c4d.UVOL_Button_ExportSDF:
+				self.generate_sdf(node)
 				self.export_sdf(node)
+			if commandId == c4d.UVOL_Button_GenerateVF:
+				print "Generate VF"
 			if commandId == c4d.UVOL_Button_ExportVF:
 				print "Export VF"
 		return True
 
+	def CheckDirty(self, op, doc):
+		vobDirty = -1
+		vob = self.get_volume_object(tag)
+		if vob is not None:
+			vobDirty = vob.GetDirty(c4d.DIRTYFLAGS_DATA | c4d.DIRTYFLAGS_MATRIX | c4d.DIRTYFLAGS_CACHE)
+		if self.vobDirty_ != vobDirty:
+			op.SetDirty(c4d.DIRTYFLAGS_DATA)
+			c4d.EventAdd()
+			vobDirty_ = vobDirty
 
-	def export_sdf(self, node):
-		print "Export SDF..."
+	def AddToExecution(self, tag, list):
+		list.Add(tag, c4d.EXECUTIONPRIORITY_GENERATOR, 0)
+		return True
+	
+	def Execute(self, tag, doc, op, bt, priority, flags):
+		data = tag.GetDataInstance()
+		if data.GetBool(c4d.UVOL_AutoGenerate):
+			self.generate_sdf(tag)
+
+		return c4d.EXECUTIONRESULT_OK
+
+	#----------------------
+	# Generate SDF
+	#
+	def generate_sdf(self, node):
+		self.generated_ = False
+		
 		vob = self.get_volume_object(node)
-		if vob == None: return False
+		if vob == None:
+			return False
 		volume = vob.GetVolume()
 		access = v.GridAccessorInterface.Create(maxon.Float32)
 		access.Init(volume)
@@ -172,36 +209,49 @@ class UnityVolume(plugins.TagData):
 			else:
 				values[i] = val / valueMax
 
-		self.points_ = []
+		self.states_ = states
+		self.values_ = values
+		self.points_ = coords
 		self.colors_ = []
-		if data.GetBool(c4d.UVOL_DrawPoints):
-			for p in coords:
-				self.points_.append( p )
-			for val in values:
-				#self.colors_.append( abs(val) )
-				if val < 0:
-					self.colors_.extend( [ abs(val), abs(val), abs(val) ] )
-				else:
-					self.colors_.extend( [ value, 0, 0 ] )
-			#for st in states:
-				#self.colors_.append( 1.0 if st else 0.0 )
+		for val in values:
+			if val < 0:
+				self.colors_.extend( [ abs(val), abs(val), abs(val) ] )
+			else:
+				self.colors_.extend( [ value, 0, 0 ] )
 
+		#print "SDF Generated!"
+		self.generated_ = True
 		return True
 
+	# Export SDF
+	def export_sdf(self, node):
+		print "Export SDF..."
+
+
+	#-----------------------------------------------------------
+	# Draw
+	#
 	def Draw(self, node, op, bd, bh):
-		bd.SetMatrix_Matrix( None, c4d.Matrix() )
+		data = node.GetDataInstance()
+		if not data.GetBool(c4d.UVOL_DrawPoints): return
 		
+		vob = self.get_volume_object(node)
+		#bd.SetMatrix_Matrix( vob, vob.GetMg() )
+		bd.SetMatrix_Matrix( None, c4d.Matrix() )
+
 		data = node.GetDataInstance()
 		if data.GetBool(c4d.UVOL_DrawPoints) and len(self.points_) > 0 and len(self.colors_) > 0:
 			bd.DrawPoints( self.points_, self.colors_, len(self.colors_)/len(self.points_) )
 
 		# Draws the overall bounding box
+		#boundsColor = c4d.GetViewColor(c4d.VIEWCOLOR_ACTIVEPOINT);
+		boundsColor = c4d.Vector(0,1,1) if self.generated_ else c4d.Vector(1,0,0)
 		boundsSize = data.GetVector(c4d.UVOL_BoundsSize)
 		box = c4d.Matrix()
 		box.v1 = box.v1 * (boundsSize.x * 0.5)
 		box.v2 = box.v2 * (boundsSize.y * 0.5)
 		box.v3 = box.v3 * (boundsSize.z * 0.5)
-		bd.DrawBox(box, 1.0, c4d.GetViewColor(c4d.VIEWCOLOR_ACTIVEPOINT), True)
+		bd.DrawBox(box, 1.0, boundsColor, True)
 
 		return c4d.DRAWRESULT_OK
 
