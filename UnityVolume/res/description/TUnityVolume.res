@@ -23,7 +23,15 @@ CONTAINER TUnityVolume
 		
 		VECTOR UVOL_BoundsSize { ANIM OFF; }
 		VECTOR UVOL_CellsCount { ANIM OFF; }
-		BOOL UVOL_CellsCenter { ANIM OFF; }
+		LONG UVOL_CellsSample
+		{
+			ANIM OFF;
+			CYCLE
+			{
+				UVOL_CellsSample_Center;
+				UVOL_CellsSample_Edges;
+			}
+		}
 		BOOL UVOL_DrawPoints { ANIM OFF; }
 
 		SEPARATOR { LINE; }

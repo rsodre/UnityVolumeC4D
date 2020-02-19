@@ -5,7 +5,7 @@ STRINGTABLE TUnityVolume
 	UVOL_Volume					"Volume";
 	
 	UVOL_CellsCount				"Cells Count";
-	UVOL_CellsCenter			"Cells Center";
+	UVOL_CellsSample			"Cells Cample";
 	UVOL_BoundsSize				"Bounds";
 	UVOL_DrawPoints				"Draw Points";
 	UVOL_AutoGenerate			"Auto Generate";
@@ -18,4 +18,7 @@ STRINGTABLE TUnityVolume
 	UVOL_Button_ExportSDF		"Export SDF";
 	UVOL_Button_GenerateVF		"Generate VF";
 	UVOL_Button_ExportVF		"Export VF";
+	
+	UVOL_CellsSample_Center		"Center";
+	UVOL_CellsSample_Edges		"Edges";
 }

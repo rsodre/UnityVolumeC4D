@@ -5,7 +5,7 @@ enum
 {
 	UVOL_Volume = 1000,
 	UVOL_CellsCount,
-	UVOL_CellsCenter,
+	UVOL_CellsSample,
 	UVOL_BoundsSize,
 	UVOL_DrawPoints,
 	UVOL_AutoGenerate,
@@ -18,6 +18,12 @@ enum
 	UVOL_Button_ExportSDF,
 	UVOL_Button_GenerateVF,
 	UVOL_Button_ExportVF
+}
+
+enum
+{
+	UVOL_CellsSample_Center,
+	UVOL_CellsSample_Edges,
 }
 
 #endif

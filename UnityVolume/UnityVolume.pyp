@@ -50,7 +50,7 @@ class UnityVolume(plugins.TagData):
 	def Init(self, node):
 		bc = node.GetDataInstance()
 		bc.SetVector( c4d.UVOL_CellsCount, c4d.Vector(20,20,20) )
-		bc.SetBool( c4d.UVOL_CellsCenter, True )
+		bc.SetInt32( c4d.UVOL_CellsSample, c4d.UVOL_CellsSample_Center )
 		bc.SetBool( c4d.UVOL_DrawPoints, True )
 		bc.SetBool( c4d.UVOL_AutoGenerate, True )
 		bc.SetVector( c4d.UVOL_BoundsSize, c4d.Vector(200,200,200) )
@@ -165,7 +165,7 @@ class UnityVolume(plugins.TagData):
 		yrange = []
 		zrange = []
 		cellsSize = c4d.Vector( boundsSize.x/cellsCount.x, boundsSize.y/cellsCount.y, boundsSize.z/cellsCount.z )
-		if bc.GetBool(c4d.UVOL_CellsCenter):
+		if bc.GetInt32(c4d.UVOL_CellsSample) == c4d.UVOL_CellsSample_Center:
 			for x in range( 0, int(cellsCount.x) ):
 				xrange.append( boundsMin.x + (x + 0.5) * cellsSize.x )
 			for y in range( 0, int(cellsCount.y) ):
