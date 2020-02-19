@@ -130,18 +130,18 @@ class UnityVolume(plugins.TagData):
 		cellsSize = c4d.Vector( boundsSize.x/cellsCount.x, boundsSize.y/cellsCount.y, boundsSize.z/cellsCount.z )
 		if data.GetBool(c4d.UVOL_CellsCenter):
 			for x in range( 0, int(cellsCount.x) ):
-				xrange.append( (x + 0.5) * cellsSize.x )
+				xrange.append( boundsMin.x + (x + 0.5) * cellsSize.x )
 			for y in range( 0, int(cellsCount.y) ):
-				yrange.append( (y + 0.5) * cellsSize.y )
+				yrange.append( boundsMin.y + (y + 0.5) * cellsSize.y )
 			for z in range( 0, int(cellsCount.z) ):
-				zrange.append( (z + 0.5) * cellsSize.z )
+				zrange.append( boundsMin.z + (z + 0.5) * cellsSize.z )
 		else:
 			for x in range( 0, int(cellsCount.x)+1 ):
-				xrange.append( x * cellsSize.x )
+				xrange.append( boundsMin.x + x * cellsSize.x )
 			for y in range( 0, int(cellsCount.y)+1 ):
-				yrange.append( y * cellsSize.y )
+				yrange.append( boundsMin.y + y * cellsSize.y )
 			for z in range( 0, int(cellsCount.z)+1 ):
-				zrange.append( z * cellsSize.z )
+				zrange.append( boundsMin.z + z * cellsSize.z )
 
 		coords = []
 		states = []
@@ -164,17 +164,25 @@ class UnityVolume(plugins.TagData):
 					#print " Data(%d,%d,%d) = [%d] %f" % (x,y,z,state,value)
 
 		#print "range %f > %f" % (valueMin,valueMax)
-		mv = max( abs(valueMin), valueMax )
+		#mv = max( abs(valueMin), valueMax )
 		for i, val in enumerate(values):
-			values[i] = val / mv
+			#values[i] = val / mv
+			if val < 0:
+				values[i] = val / abs(valueMin)
+			else:
+				values[i] = val / valueMax
 
 		self.points_ = []
 		self.colors_ = []
 		if data.GetBool(c4d.UVOL_DrawPoints):
 			for p in coords:
-				self.points_.append( boundsMin + p )
+				self.points_.append( p )
 			for val in values:
-				self.colors_.append( abs(val) )
+				#self.colors_.append( abs(val) )
+				if val < 0:
+					self.colors_.extend( [ abs(val), abs(val), abs(val) ] )
+				else:
+					self.colors_.extend( [ value, 0, 0 ] )
 			#for st in states:
 				#self.colors_.append( 1.0 if st else 0.0 )
 
@@ -185,7 +193,7 @@ class UnityVolume(plugins.TagData):
 		
 		data = node.GetDataInstance()
 		if data.GetBool(c4d.UVOL_DrawPoints) and len(self.points_) > 0 and len(self.colors_) > 0:
-			bd.DrawPoints( self.points_, self.colors_, 3 )
+			bd.DrawPoints( self.points_, self.colors_, len(self.colors_)/len(self.points_) )
 
 		# Draws the overall bounding box
 		boundsSize = data.GetVector(c4d.UVOL_BoundsSize)
