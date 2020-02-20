@@ -9,6 +9,7 @@ enum
 	UVOL_BoundsSize,
 	UVOL_DrawPoints,
 	UVOL_AutoGenerate,
+	UVOL_ExportFilename,
 
 	UVOL_Info_VolumeSize = 1100,
 	UVOL_Info_VolumeCount,

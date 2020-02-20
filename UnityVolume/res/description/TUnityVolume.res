@@ -32,19 +32,26 @@ CONTAINER TUnityVolume
 				UVOL_CellsSample_Edges;
 			}
 		}
-		BOOL UVOL_DrawPoints { ANIM OFF; }
 
-		SEPARATOR { LINE; }
-		
-		BOOL UVOL_AutoGenerate  { ANIM OFF; }
-		
 		GROUP
 		{
 			COLUMNS 2;
-			BUTTON UVOL_Button_GenerateSDF {}
-			BUTTON UVOL_Button_ExportSDF {}
+			BOOL UVOL_AutoGenerate  { ANIM OFF; }
+			BOOL UVOL_DrawPoints { ANIM OFF; }
+		}
+
+		BUTTON UVOL_Button_GenerateSDF {}
+		
+		SEPARATOR { LINE; }
+		
+		FILENAME UVOL_ExportFilename
+		{
+			ANIM OFF;
+			SAVE;
 		}
 		
+		BUTTON UVOL_Button_ExportSDF {}
+
 		SEPARATOR { LINE; }
 		
 		GROUP

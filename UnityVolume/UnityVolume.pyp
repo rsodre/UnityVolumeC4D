@@ -53,6 +53,7 @@ class UnityVolume(plugins.TagData):
 		bc.SetInt32( c4d.UVOL_CellsSample, c4d.UVOL_CellsSample_Center )
 		bc.SetBool( c4d.UVOL_DrawPoints, True )
 		bc.SetBool( c4d.UVOL_AutoGenerate, True )
+		bc.SetFilename( c4d.UVOL_ExportFilename, None )
 		bc.SetVector( c4d.UVOL_BoundsSize, c4d.Vector(200,200,200) )
 		bc.SetVector( c4d.UVOL_Info_VolumeSize, c4d.Vector(0) )
 		bc.SetInt32( c4d.UVOL_Info_VolumeCount, 0 )
@@ -227,6 +228,17 @@ class UnityVolume(plugins.TagData):
 	def export_sdf(self, node):
 		print "Export SDF..."
 
+		# construct file URL
+		bc = node.GetDataInstance()
+		filePath = bc.GetFilename(c4d.UVOL_ExportFilename)
+		fo = open(filePath, "wb")
+		fo.write( "VF_F")
+		fo.close()
+		print "Exported"
+		return True
+
+	
+	
 
 	#-----------------------------------------------------------
 	# Draw

@@ -9,6 +9,7 @@ STRINGTABLE TUnityVolume
 	UVOL_BoundsSize				"Bounds";
 	UVOL_DrawPoints				"Draw Points";
 	UVOL_AutoGenerate			"Auto Generate";
+	UVOL_ExportFilename			"Export Filename";
 
 	UVOL_Info_VolumeSize		"Volume Size";
 	UVOL_Info_VolumeCount		"Volume Count";
