@@ -7,6 +7,7 @@
 
 import os
 import math
+from struct import *
 import c4d
 from c4d import bitmaps, plugins, utils
 import maxon
@@ -21,6 +22,7 @@ PLUGIN_ID = 1054472
 class UnityVolume(plugins.TagData):
 	"""UnityVolume"""
 
+	size_ = []
 	states_ = []
 	values_ = []
 	points_ = []
@@ -113,7 +115,7 @@ class UnityVolume(plugins.TagData):
 				self.generate_sdf(node)
 			if commandId == c4d.UVOL_Button_ExportSDF:
 				self.generate_sdf(node)
-				self.export_sdf(node)
+				self.export_vf(node, 'F')
 			if commandId == c4d.UVOL_Button_GenerateVF:
 				print "Generate VF"
 			if commandId == c4d.UVOL_Button_ExportVF:
@@ -138,10 +140,38 @@ class UnityVolume(plugins.TagData):
 		bc = tag.GetDataInstance()
 		if bc.GetBool(c4d.UVOL_AutoGenerate):
 			self.generate_sdf(tag)
-
 		return c4d.EXECUTIONRESULT_OK
 
-	#----------------------
+	#-----------------------------------------------------------
+	# Draw
+	#
+	def Draw(self, node, op, bd, bh):
+		bc = node.GetDataInstance()
+		if not bc.GetBool(c4d.UVOL_DrawPoints):
+			return c4d.DRAWRESULT_SKIP
+	
+		vob = self.get_volume_object(node)
+		#bd.SetMatrix_Matrix( vob, vob.GetMg() )
+		bd.SetMatrix_Matrix( None, c4d.Matrix() )
+		
+		bc = node.GetDataInstance()
+		if bc.GetBool(c4d.UVOL_DrawPoints) and len(self.points_) > 0 and len(self.colors_) > 0:
+			bd.DrawPoints( self.points_, self.colors_, len(self.colors_)/len(self.points_) )
+
+		# Draws the overall bounding box
+		#boundsColor = c4d.GetViewColor(c4d.VIEWCOLOR_ACTIVEPOINT);
+		boundsColor = c4d.Vector(0,1,1) if self.generated_ else c4d.Vector(1,0,0)
+		boundsSize = bc.GetVector(c4d.UVOL_BoundsSize)
+		box = c4d.Matrix()
+		box.v1 = box.v1 * (boundsSize.x * 0.5)
+		box.v2 = box.v2 * (boundsSize.y * 0.5)
+		box.v3 = box.v3 * (boundsSize.z * 0.5)
+		bd.DrawBox(box, 1.0, boundsColor, True)
+	
+		return c4d.DRAWRESULT_OK
+	
+
+	#-----------------------------------------------------------
 	# Generate SDF
 	#
 	def generate_sdf(self, node):
@@ -167,18 +197,20 @@ class UnityVolume(plugins.TagData):
 		zrange = []
 		cellsSize = c4d.Vector( boundsSize.x/cellsCount.x, boundsSize.y/cellsCount.y, boundsSize.z/cellsCount.z )
 		if bc.GetInt32(c4d.UVOL_CellsSample) == c4d.UVOL_CellsSample_Center:
-			for x in range( 0, int(cellsCount.x) ):
+			volumeSize = [ int(cellsCount.x), int(cellsCount.y), int(cellsCount.z) ]
+			for x in range( 0, volumeSize[0] ):
 				xrange.append( boundsMin.x + (x + 0.5) * cellsSize.x )
-			for y in range( 0, int(cellsCount.y) ):
+			for y in range( 0, volumeSize[1] ):
 				yrange.append( boundsMin.y + (y + 0.5) * cellsSize.y )
-			for z in range( 0, int(cellsCount.z) ):
+			for z in range( 0, volumeSize[2] ):
 				zrange.append( boundsMin.z + (z + 0.5) * cellsSize.z )
 		else:
-			for x in range( 0, int(cellsCount.x)+1 ):
+			volumeSize = [ int(cellsCount.x)+1, int(cellsCount.y)+2, int(cellsCount.z)+3 ]
+			for x in range( 0, volumeSize[0] ):
 				xrange.append( boundsMin.x + x * cellsSize.x )
-			for y in range( 0, int(cellsCount.y)+1 ):
+			for y in range( 0, volumeSize[1] ):
 				yrange.append( boundsMin.y + y * cellsSize.y )
-			for z in range( 0, int(cellsCount.z)+1 ):
+			for z in range( 0, volumeSize[2] ):
 				zrange.append( boundsMin.z + z * cellsSize.z )
 
 		coords = []
@@ -210,6 +242,7 @@ class UnityVolume(plugins.TagData):
 			else:
 				values[i] = val / valueMax
 
+		self.size_ = volumeSize
 		self.states_ = states
 		self.values_ = values
 		self.points_ = coords
@@ -224,49 +257,75 @@ class UnityVolume(plugins.TagData):
 		self.generated_ = True
 		return True
 
-	# Export SDF
-	def export_sdf(self, node):
-		print "Export SDF..."
+	#-----------------------------------------------------------
+	# Export
+	#
+	def export_vf(self, node, dataType):
 
-		# construct file URL
+		if dataType != 'F' and dataType != 'V':
+			print "Invalid export data type [" + dataType + "]"
+			return False
+		if len(self.size_) != 3:
+			print "Empty volume!"
+			return False
+		if self.size_[0] == 0 or self.size_[1] == 0 or self.size_[2] == 0 or self.size_[0] > 65535 or self.size_[1] > 65535 or self.size_[2] > 65535:
+			print "Invalid volume size " + str(self.size_)
+			return False
+
+		print "Export VF [" + dataType + "]..."
+		
 		bc = node.GetDataInstance()
-		filePath = bc.GetFilename(c4d.UVOL_ExportFilename)
+		filePath = str(bc.GetFilename(c4d.UVOL_ExportFilename))
+		if not self.validate_filename(filePath):
+			return False
+
+		# Open file
 		fo = open(filePath, "wb")
-		fo.write( "VF_F")
+		
+		# vf file format
+		# https://github.com/peeweek/VectorFieldFile
+		# - FourCC (4 Bytes)
+		#	"VF_F" for float field or "VF_V" fori Vector field
+		fo.write("VF_")
+		fo.write(dataType)
+		# - Volume Size (6 Bytes)
+		#	3 ushort describes the X,Y, & Z size of the volume, with a maximum of 65535
+		#	pack() https://docs.python.org/2/library/struct.html
+		data = pack('<HHH', self.size_[0], self.size_[1], self.size_[2] )
+		fo.write(data)
+		# - Data (size_X * size_Y * size_Z * Stride) where Stride = 1 (float) or 3 (vector)
+		#	Float = 4 bytes
+		#	Vector = 12 bytes
+		for val in self.values_:
+			if dataType == 'F':
+				data = pack('f', val)
+			else:
+				data = pack('fff', val.x, val.y, val.z)
+			fo.write(data)
+
+		# Close file
 		fo.close()
-		print "Exported"
+		print "Exported!"
 		return True
 
 	
-	
-
 	#-----------------------------------------------------------
-	# Draw
+	# Misc
 	#
-	def Draw(self, node, op, bd, bh):
-		bc = node.GetDataInstance()
-		if not bc.GetBool(c4d.UVOL_DrawPoints):
-			return c4d.DRAWRESULT_SKIP
-		
-		vob = self.get_volume_object(node)
-		#bd.SetMatrix_Matrix( vob, vob.GetMg() )
-		bd.SetMatrix_Matrix( None, c4d.Matrix() )
+	def validate_filename(self, filePath):
+		fileFolder = os.path.dirname(filePath)
+		fileExtension = os.path.splitext(filePath)[1].lower()
+		if filePath is None or filePath == '':
+			print "Filename not set"
+			return False
+		if fileFolder == '' or not os.path.exists(fileFolder) or not os.path.isdir(fileFolder):
+			print "Filename has invalid folder"
+			return False
+		if fileExtension != '.vf':
+			print "Filename extension must be [.vf]"
+			return False
+		return True
 
-		bc = node.GetDataInstance()
-		if bc.GetBool(c4d.UVOL_DrawPoints) and len(self.points_) > 0 and len(self.colors_) > 0:
-			bd.DrawPoints( self.points_, self.colors_, len(self.colors_)/len(self.points_) )
-
-		# Draws the overall bounding box
-		#boundsColor = c4d.GetViewColor(c4d.VIEWCOLOR_ACTIVEPOINT);
-		boundsColor = c4d.Vector(0,1,1) if self.generated_ else c4d.Vector(1,0,0)
-		boundsSize = bc.GetVector(c4d.UVOL_BoundsSize)
-		box = c4d.Matrix()
-		box.v1 = box.v1 * (boundsSize.x * 0.5)
-		box.v2 = box.v2 * (boundsSize.y * 0.5)
-		box.v3 = box.v3 * (boundsSize.z * 0.5)
-		bd.DrawBox(box, 1.0, boundsColor, True)
-
-		return c4d.DRAWRESULT_OK
 
 
 
