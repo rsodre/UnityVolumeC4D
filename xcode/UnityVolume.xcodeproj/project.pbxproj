@@ -8,21 +8,20 @@
 
 /* Begin PBXFileReference section */
 		DB909DE720CD239100A8123D /* UnityVolume */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnityVolume; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBC1487523FF6A6600AC1CE7 /* TUnityVolume.str */ = {isa = PBXFileReference; lastKnownFileType = text; name = TUnityVolume.str; path = ../UnityVolumePlugin/res/strings_us/description/TUnityVolume.str; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		DBC1487723FF6A6600AC1CE7 /* TUnityVolume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUnityVolume.h; path = ../UnityVolumePlugin/res/description/TUnityVolume.h; sourceTree = SOURCE_ROOT; };
+		DBC1487823FF6A6600AC1CE7 /* TUnityVolume.res */ = {isa = PBXFileReference; lastKnownFileType = text; name = TUnityVolume.res; path = ../UnityVolumePlugin/res/description/TUnityVolume.res; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		DBC1487A23FF6A6600AC1CE7 /* c4d_symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = c4d_symbols.h; path = ../UnityVolumePlugin/res/c4d_symbols.h; sourceTree = SOURCE_ROOT; };
+		DBC1487B23FF6A6600AC1CE7 /* UnityVolume.pyp */ = {isa = PBXFileReference; lastKnownFileType = text; name = UnityVolume.pyp; path = ../UnityVolumePlugin/UnityVolume.pyp; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.python; };
 		DBC1BCBC23F4DBAD00BC96BD /* plugins */ = {isa = PBXFileReference; lastKnownFileType = folder; name = plugins; path = ../../../SDK_DOCS/CINEMA4DR21022PYTHONSDKHTML20190902/examples/plugins; sourceTree = SOURCE_ROOT; };
 		DBC1BCBD23F4DE6800BC96BD /* cinema4d_py_sdk-master */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "cinema4d_py_sdk-master"; path = "../../cinema4d_py_sdk-master"; sourceTree = "<group>"; };
-		DBF6B7A623F4767E006A55BF /* TUnityVolume.str */ = {isa = PBXFileReference; lastKnownFileType = text; name = TUnityVolume.str; path = ../UnityVolume/res/strings_us/description/TUnityVolume.str; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		DBF6B7A823F4767E006A55BF /* TUnityVolume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUnityVolume.h; path = ../UnityVolume/res/description/TUnityVolume.h; sourceTree = SOURCE_ROOT; };
-		DBF6B7A923F4767E006A55BF /* TUnityVolume.res */ = {isa = PBXFileReference; lastKnownFileType = text; name = TUnityVolume.res; path = ../UnityVolume/res/description/TUnityVolume.res; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		DBF6B7AB23F4767E006A55BF /* c4d_symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = c4d_symbols.h; path = ../UnityVolume/res/c4d_symbols.h; sourceTree = SOURCE_ROOT; };
-		DBF6B7AC23F4767E006A55BF /* UnityVolume.pyp */ = {isa = PBXFileReference; lastKnownFileType = text; name = UnityVolume.pyp; path = ../UnityVolume/UnityVolume.pyp; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.python; };
-		DBF6B7B523F47690006A55BF /* install.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = install.sh; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		DB0B31BE20C888520062554C = {
 			isa = PBXGroup;
 			children = (
-				DBF6B79D23F4767E006A55BF /* UnityVolume */,
+				DBC1487123FF6A6600AC1CE7 /* UnityVolumePlugin */,
 				DB0B31CE20C8A4630062554C /* C4D Resources */,
 				DB909DE720CD239100A8123D /* UnityVolume */,
 			);
@@ -37,62 +36,53 @@
 			name = "C4D Resources";
 			sourceTree = "<group>";
 		};
-		DBF6B79D23F4767E006A55BF /* UnityVolume */ = {
+		DBC1487123FF6A6600AC1CE7 /* UnityVolumePlugin */ = {
 			isa = PBXGroup;
 			children = (
-				DBF6B7AC23F4767E006A55BF /* UnityVolume.pyp */,
-				DBF6B7A323F4767E006A55BF /* res */,
-				DBF6B7B123F47690006A55BF /* xcode */,
+				DBC1487B23FF6A6600AC1CE7 /* UnityVolume.pyp */,
+				DBC1487223FF6A6600AC1CE7 /* res */,
 			);
-			name = UnityVolume;
-			path = ..;
+			name = UnityVolumePlugin;
+			path = ../UnityVolumePlugin;
 			sourceTree = SOURCE_ROOT;
 		};
-		DBF6B7A323F4767E006A55BF /* res */ = {
+		DBC1487223FF6A6600AC1CE7 /* res */ = {
 			isa = PBXGroup;
 			children = (
-				DBF6B7A723F4767E006A55BF /* description */,
-				DBF6B7A423F4767E006A55BF /* strings_us */,
-				DBF6B7AB23F4767E006A55BF /* c4d_symbols.h */,
+				DBC1487623FF6A6600AC1CE7 /* description */,
+				DBC1487323FF6A6600AC1CE7 /* strings_us */,
+				DBC1487A23FF6A6600AC1CE7 /* c4d_symbols.h */,
 			);
 			name = res;
-			path = ../UnityVolume/res;
+			path = ../UnityVolumePlugin/res;
 			sourceTree = SOURCE_ROOT;
 		};
-		DBF6B7A423F4767E006A55BF /* strings_us */ = {
+		DBC1487323FF6A6600AC1CE7 /* strings_us */ = {
 			isa = PBXGroup;
 			children = (
-				DBF6B7A523F4767E006A55BF /* description */,
+				DBC1487423FF6A6600AC1CE7 /* description */,
 			);
 			name = strings_us;
-			path = ../UnityVolume/res/strings_us;
+			path = ../UnityVolumePlugin/res/strings_us;
 			sourceTree = SOURCE_ROOT;
 		};
-		DBF6B7A523F4767E006A55BF /* description */ = {
+		DBC1487423FF6A6600AC1CE7 /* description */ = {
 			isa = PBXGroup;
 			children = (
-				DBF6B7A623F4767E006A55BF /* TUnityVolume.str */,
+				DBC1487523FF6A6600AC1CE7 /* TUnityVolume.str */,
 			);
 			name = description;
-			path = ../UnityVolume/res/strings_us/description;
+			path = ../UnityVolumePlugin/res/strings_us/description;
 			sourceTree = SOURCE_ROOT;
 		};
-		DBF6B7A723F4767E006A55BF /* description */ = {
+		DBC1487623FF6A6600AC1CE7 /* description */ = {
 			isa = PBXGroup;
 			children = (
-				DBF6B7A823F4767E006A55BF /* TUnityVolume.h */,
-				DBF6B7A923F4767E006A55BF /* TUnityVolume.res */,
+				DBC1487723FF6A6600AC1CE7 /* TUnityVolume.h */,
+				DBC1487823FF6A6600AC1CE7 /* TUnityVolume.res */,
 			);
 			name = description;
-			path = ../UnityVolume/res/description;
-			sourceTree = SOURCE_ROOT;
-		};
-		DBF6B7B123F47690006A55BF /* xcode */ = {
-			isa = PBXGroup;
-			children = (
-				DBF6B7B523F47690006A55BF /* install.sh */,
-			);
-			name = xcode;
+			path = ../UnityVolumePlugin/res/description;
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
