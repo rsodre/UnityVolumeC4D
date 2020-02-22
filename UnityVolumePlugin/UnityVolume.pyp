@@ -115,7 +115,7 @@ class UnityVolume(plugins.TagData):
 				self.generate_sdf(node)
 			if commandId == c4d.UVOL_Button_ExportSDF:
 				self.generate_sdf(node)
-				self.export_vf(node, 'F')
+				self.export_vf(node, 'F', '_sdf')
 			if commandId == c4d.UVOL_Button_GenerateVF:
 				print "Generate VF"
 			if commandId == c4d.UVOL_Button_ExportVF:
@@ -146,10 +146,6 @@ class UnityVolume(plugins.TagData):
 	# Draw
 	#
 	def Draw(self, node, op, bd, bh):
-		bc = node.GetDataInstance()
-		if not bc.GetBool(c4d.UVOL_DrawPoints):
-			return c4d.DRAWRESULT_SKIP
-	
 		vob = self.get_volume_object(node)
 		#bd.SetMatrix_Matrix( vob, vob.GetMg() )
 		bd.SetMatrix_Matrix( None, c4d.Matrix() )
@@ -260,7 +256,7 @@ class UnityVolume(plugins.TagData):
 	#-----------------------------------------------------------
 	# Export
 	#
-	def export_vf(self, node, dataType):
+	def export_vf(self, node, dataType, suffix=None):
 
 		if dataType != 'F' and dataType != 'V':
 			print "Invalid export data type [" + dataType + "]"
@@ -278,6 +274,10 @@ class UnityVolume(plugins.TagData):
 		filePath = str(bc.GetFilename(c4d.UVOL_ExportFilename))
 		if not self.validate_filename(filePath):
 			return False
+		
+		if suffix is not None:
+			(root, ext) = os.path.splitext(filePath)
+			filePath = root + suffix + ext
 
 		# Open file
 		fo = open(filePath, "wb")
@@ -305,7 +305,7 @@ class UnityVolume(plugins.TagData):
 
 		# Close file
 		fo.close()
-		print "Exported!"
+		print "Exported [" + filePath + "]"
 		return True
 
 	
