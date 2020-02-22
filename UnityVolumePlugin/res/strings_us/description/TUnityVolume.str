@@ -8,6 +8,7 @@ STRINGTABLE TUnityVolume
 	UVOL_CellsSample			"Cells Cample";
 	UVOL_BoundsSize				"Bounds";
 	UVOL_DrawPoints				"Draw Points";
+	UVOL_PointSize				"Point Size";
 	UVOL_AutoGenerate			"Auto Generate";
 	UVOL_ExportFilename			"Export Filename";
 
@@ -15,11 +16,15 @@ STRINGTABLE TUnityVolume
 	UVOL_Info_VolumeCount		"Volume Count";
 	UVOL_Info_VoxelCount		"Voxel Count";
 
-	UVOL_Button_GenerateSDF		"Generate SDF";
+	UVOL_Button_GenerateSDF		"Generate";
 	UVOL_Button_ExportSDF		"Export SDF";
-	UVOL_Button_GenerateVF		"Generate VF";
-	UVOL_Button_ExportVF		"Export VF";
+	UVOL_Button_ExportGradient	"Export Gradient";
 	
 	UVOL_CellsSample_Center		"Center";
 	UVOL_CellsSample_Edges		"Edges";
+	
+	UVOL_DrawPoints_None		"None";
+	UVOL_DrawPoints_SDF			"Signed Distance";
+	UVOL_DrawPoints_Gradient	"Gradient";
+
 }

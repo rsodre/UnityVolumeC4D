@@ -53,7 +53,8 @@ class UnityVolume(plugins.TagData):
 		bc = node.GetDataInstance()
 		bc.SetVector( c4d.UVOL_CellsCount, c4d.Vector(20,20,20) )
 		bc.SetInt32( c4d.UVOL_CellsSample, c4d.UVOL_CellsSample_Center )
-		bc.SetBool( c4d.UVOL_DrawPoints, True )
+		bc.SetInt32( c4d.UVOL_DrawPoints, c4d.UVOL_DrawPoints_SDF )
+		bc.SetInt32( c4d.UVOL_PointSize, 2)
 		bc.SetBool( c4d.UVOL_AutoGenerate, True )
 		bc.SetFilename( c4d.UVOL_ExportFilename, None )
 		bc.SetVector( c4d.UVOL_BoundsSize, c4d.Vector(200,200,200) )
@@ -149,10 +150,14 @@ class UnityVolume(plugins.TagData):
 		vob = self.get_volume_object(node)
 		#bd.SetMatrix_Matrix( vob, vob.GetMg() )
 		bd.SetMatrix_Matrix( None, c4d.Matrix() )
-		
+
 		bc = node.GetDataInstance()
-		if bc.GetBool(c4d.UVOL_DrawPoints) and len(self.points_) > 0 and len(self.colors_) > 0:
+		bd.SetPointSize(bc.GetInt32(c4d.UVOL_PointSize))
+		
+		if bc.GetInt32(c4d.UVOL_DrawPoints) == c4d.UVOL_DrawPoints_SDF and len(self.points_) > 0 and len(self.colors_) > 0:
 			bd.DrawPoints( self.points_, self.colors_, len(self.colors_)/len(self.points_) )
+		if bc.GetInt32(c4d.UVOL_DrawPoints) == c4d.UVOL_DrawPoints_Gradient and len(self.points_) > 0 and len(self.gradients_) > 0:
+			bd.DrawPoints( self.points_, self.gradients_, len(self.gradients_)/len(self.points_) )
 
 		# Draws the overall bounding box
 		#boundsColor = c4d.GetViewColor(c4d.VIEWCOLOR_ACTIVEPOINT);

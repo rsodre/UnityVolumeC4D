@@ -33,13 +33,30 @@ CONTAINER TUnityVolume
 			}
 		}
 
-		GROUP
+		SEPARATOR { LINE; }
+		
+		LONG UVOL_DrawPoints
 		{
-			COLUMNS 2;
-			BOOL UVOL_AutoGenerate  { ANIM OFF; }
-			BOOL UVOL_DrawPoints { ANIM OFF; }
+			ANIM OFF;
+			CYCLE
+			{
+				UVOL_DrawPoints_None;
+				UVOL_DrawPoints_SDF;
+				UVOL_DrawPoints_Gradient;
+			}
+		}
+		
+		LONG UVOL_PointSize
+		{
+			ANIM OFF;
+			CUSTOMGUI LONGSLIDER;
+			MIN 1;
+			MAX 4;
 		}
 
+
+		BOOL UVOL_AutoGenerate  { ANIM OFF; }
+		
 		BUTTON UVOL_Button_GenerateSDF {}
 		
 		SEPARATOR { LINE; }
@@ -49,16 +66,12 @@ CONTAINER TUnityVolume
 			ANIM OFF;
 			SAVE;
 		}
-		
-		BUTTON UVOL_Button_ExportSDF {}
-
-		SEPARATOR { LINE; }
-		
+				
 		GROUP
 		{
 			COLUMNS 2;
-			BUTTON UVOL_Button_GenerateVF {}
-			BUTTON UVOL_Button_ExportVF {}
+			BUTTON UVOL_Button_ExportSDF {}
+			BUTTON UVOL_Button_ExportGradient {}
 		}
 	}
 }
