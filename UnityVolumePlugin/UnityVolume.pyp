@@ -27,6 +27,7 @@ class UnityVolume(plugins.TagData):
 	values_ = []
 	points_ = []
 	colors_ = []
+	gradients_ = []
 	generated_ = False
 	vobDirty_ = -1
 
@@ -75,10 +76,6 @@ class UnityVolume(plugins.TagData):
 			return False
 		if paramId == c4d.UVOL_Info_VolumeCount:
 			return False
-		if paramId == c4d.UVOL_Button_GenerateVF:
-			return False
-		if paramId == c4d.UVOL_Button_ExportVF:
-			return False
 		return True
 
 	def GetDParameter(self, node, id, flags):
@@ -117,10 +114,9 @@ class UnityVolume(plugins.TagData):
 			if commandId == c4d.UVOL_Button_ExportSDF:
 				self.generate_sdf(node)
 				self.export_vf(node, 'F', '_sdf')
-			if commandId == c4d.UVOL_Button_GenerateVF:
-				print "Generate VF"
-			if commandId == c4d.UVOL_Button_ExportVF:
-				print "Export VF"
+			if commandId == c4d.UVOL_Button_ExportGradient:
+				self.generate_sdf(node)
+				self.export_vf(node, 'V', '_gradient')
 		return True
 
 	def CheckDirty(self, op, doc):
@@ -184,9 +180,15 @@ class UnityVolume(plugins.TagData):
 		volume = vob.GetVolume()
 		access = v.GridAccessorInterface.Create(maxon.Float32)
 		access.Init(volume)
-		#xform = volume.GetGridTransform()
-		#gridName = volume.GetGridName()
-		
+		#print volume.GetGridName()
+		#print volume.GetGridType()
+		#print volume.GetGridTransform()
+
+		# Create Gradient
+		gradVolume = v.VolumeToolsInterface.CreateGradientVolume(volume, maxon.ThreadRef())
+		gradAccess = v.GridAccessorInterface.Create(maxon.Vector32)
+		gradAccess.Init(gradVolume)
+
 		bc = node.GetDataInstance()
 		cellsCount = bc.GetVector(c4d.UVOL_CellsCount)
 		boundsSize = bc.GetVector(c4d.UVOL_BoundsSize)
@@ -217,6 +219,7 @@ class UnityVolume(plugins.TagData):
 		coords = []
 		states = []
 		values = []
+		grads = []
 		valueMin = 0
 		valueMax = 0
 		for x in xrange:
@@ -225,9 +228,11 @@ class UnityVolume(plugins.TagData):
 					coord = c4d.Vector(x,y,z)
 					state = access.GetActiveState(coord)
 					value = access.GetValue(coord)
+					grad = gradAccess.GetValue(coord)
 					coords.append( coord )
 					states.append( state )
 					values.append( value )
+					grads.append( grad )
 					if value > 0 and value > valueMax:
 						valueMax = value
 					if value < 0 and value < valueMin:
@@ -247,12 +252,15 @@ class UnityVolume(plugins.TagData):
 		self.states_ = states
 		self.values_ = values
 		self.points_ = coords
+		self.gradients_ = []
 		self.colors_ = []
+		for grad in grads:
+			self.gradients_.extend( [ grad.x, grad.y, grad.z ] )
 		for val in values:
 			if val < 0:
 				self.colors_.extend( [ abs(val), abs(val), abs(val) ] )
 			else:
-				self.colors_.extend( [ value, 0, 0 ] )
+				self.colors_.extend( [ 0, 0, value ] )
 
 		#print "SDF Generated!"
 		self.generated_ = True
@@ -301,12 +309,14 @@ class UnityVolume(plugins.TagData):
 		# - Data (size_X * size_Y * size_Z * Stride) where Stride = 1 (float) or 3 (vector)
 		#	Float = 4 bytes
 		#	Vector = 12 bytes
-		for val in self.values_:
-			if dataType == 'F':
+		if dataType == 'F':
+			for val in self.values_:
 				data = pack('f', val)
-			else:
-				data = pack('fff', val.x, val.y, val.z)
-			fo.write(data)
+				fo.write(data)
+		if dataType == 'V':
+			for grad in self.gradients_:
+				data = pack('f', grad)
+				fo.write(data)
 
 		# Close file
 		fo.close()
